@@ -43,6 +43,26 @@ pword: 123
 Afterwards you can now create posts and also view existing posts.
 ### Break down into end to end tests
 
+Once the user has logged in using the credentials of some of the premade accounts (you can opt to create your own account) you can now create posts.
+
+1.) Create Posts
+  For you to create posts you must first press the Create Post button in the Home or Main Menu. Afterwards the user must input the topic of the post, the contesnts of the actual posts and then the domain or subject of the post. Press the green Post button and afterwards the user would be redirected to the a success message and then the user can visit the post that he/she just created.
+ 
+2.) Editing/Deleting the Post
+  Users may edit the post that he/she created by visiting the specific post and then clicking the Edit Icon/Text under the post.
+  Users may also delete the post that he/she created by visiting the specific post and then clicking the Delete Icon/Text under the post.
+  
+3.) Commenting
+  Users may opt to write comments by clicking the comment text/icon under the specific post and then writing the comment in the text box containing the "What are your thoughts?" text.
+  
+4.) Editing/Deleting Comments
+   Users may edit the post that he/she created by visiting the specific post and then clicking the Edit Icon/Text under the specific comment he/she made.
+   Users may also delete the post that he/she created by visiting the specific post and then clicking the Delete Icon/Text under the specific comment he/she made.
+   
+   
+ 5.) Editing the Profile
+ Users may edit their respective profiles by visiting his/her profile page and then clicking the Edit Profile button. He/She may opt to edit the username and bio of their profile and also upload a new profile picture.
+
 ### Built With
 - [VSCODE](https://code.visualstudio.com/) - used for coding
 - [Google Chrome](https://www.google.com/chrome/?brand=CHBD&gclid=EAIaIQobChMI45uWqp7d6AIVCgRgCh0yDQVFEAAYASAAEgLDCPD_BwE&gclsrc=aw.ds) - used for accessing the website
