@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+	 <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+	<title>League of Forum</title>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+    <link rel="stylesheet" href="/css/profile.css">
+
+
+
+</head>
+<body>
+	
+
+		<div id = "container">
+            <div id = "container2">
+                <div id = "content">
+                    <div id = "threads">
+                        {{#each thread}}
+                        <div class = "thread">
+                            <div class = "part1">
+                                <p class = "arrowup">&#10132;</p>
+                                <p class = "num">{{number_of_comments}}</p>
+                                <p class = "arrowdown">&#10132;</p>
+                            </div>
+
+                            <div class = "part2">
+                                <div class = "author">
+                                    Posted by {{author}} {{formatdate date_created}}
+                                </div>	
+                                <div class = "posttitle">
+                                    {{topic}}
+                                </div>
+                                <div id = "tags">
+                                    <div class = "tagsprite">
+                                        <img src="/img/tag.png" style= "height: 15px; width: 15px; margin-right: 5px;">
+                                    </div>
+                                    {{#each tags}}
+                                    <div class = "tag">{{this}}</div>
+                                    {{/each}}
+                                    <a href="/specposts/{{_id}}">View Post</a>
+                                </div>
+                            </div>
+                        </div>
+                       {{/each}}
+                    </div>
+                </div>
+
+                <div id = "buffer2"></div>
+			    <div id = "about">
+                    {{#each profile}}
+                    <div id = "community" class="profile">
+                        <div id = "comm">                           
+                            <img src="{{profilePic}}" style= "height: 110px; width: 110px; border-radius:60px">
+                           
+                        </div>
+                       
+                        <div id = "uname">
+                            {{username}}
+                        </div>
+
+                        <hr>
+                     
+                        <div id = "rects">
+                            <div id = "number">
+                                <div id = "numpost">
+                                    {{number_of_post_created}}
+                                </div>
+                                <div id = "numcomment">
+                                    {{number_of_comments_made}}
+                                </div>
+                            </div>
+                            <div id = "texts">
+                                <div id = "posts">
+                                    Posts
+                                </div>
+                                <div id = "comments">
+                                    Comments
+                                </div>
+                            </div>
+                            
+                        </div>
+
+                        <hr>
+
+                         <div id = "desc">
+                             <div id = "desc1">
+                               <b>About Me</b> 
+                             </div>
+                             <div id = "desc2">
+                                {{description}} 
+                             </div>                      
+                          </div>
+
+                          <hr>
+
+                        <div id = "bday">
+                            <img src="/img/balloon.png" style= "height: 20px; width: 20px;  ">
+                                {{formatdate date_join}}
+                        </div>
+
+                        <hr>
+
+                          <div id = "bottombtn"> 
+                                <div id="creation">
+                                    <button id= "create"><a id = "createp" href="/posts">New Post</a></button>
+                                </div>
+
+                                <div id= "editprofile">
+                                    <button id = 'editprofilebtn' class="editprofile" onclick="openForm()">Edit Profile</button>
+                                </div>
+                         </div>
+                    </div>
+                    
+
+                    <div id="loginPopup">
+                        <div class="form-popup" id="myForm">
+                            <form class="form-container" action ="/profile/update" method="post" enctype="multipart/form-data">
+                                    <h2>Edit Profile</h2>
+                                    <h6>Change only the things that you want to edit</h6>
+                                    
+                                    <img src="{{profilePic}}" id="profpic" style= "height: 80px; width: 80px; border-radius: 50%;" />
+                                    
+                                    <input type="file" id="newprofpic" name="editimageprof" accept="image/*" onchange="readURL(this);" required="" >
+
+                                    <br>
+                                    
+                                    <label for="username"><b>Username</b></label>                                 
+                                    <textarea class="form-control" rows="1" id="username" name = "username" >{{username}}</textarea>
+                                    
+                                    <br>
+                                    
+                                    <label for="bio"><b>Bio</b></label>                                 
+                                    <textarea class="form-control" rows="4" id="bio" name = "bio" >{{description}}</textarea>
+                        
+
+                                    <div class="tooltip">Hover over me
+                                      <span class="tooltiptext">Tooltip text</span>
+                                    </div>
+                                    
+                                    <button type="submit" class="btn save" id = "savebtn">Save</button>
+
+
+
+                                    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+    
+                                </form>
+                        </div>
+    
+                    </div>
+                    {{/each}}
+
+                    <div id="others">
+    
+                        <ul id = "help">
+                            <li><a class = "helplinks" href="https://lol.gamepedia.com/League_of_Legends_Esports_Wiki" target="_blank">League Wiki</a></li>
+                            <li><a class = "helplinks" href="https://watch.lolesports.com/standings" target="_blank">League Team Standings</a></li>
+                            <li><a class = "helplinks" href="https://leagueoflegends.fandom.com/wiki/Item" target="_blank">League Item Wiki</a></li>
+                            <li><a class = "helplinks" href="https://champion.gg/" target="_blank">League Champion Statistics & Guide</a></li>
+                            <li><a class = "helplinks" href="https://lol.garena.ph" target="_blank">Garena Official Website</a></li>
+                            <li><a class = "helplinks" href="https://www.youtube.com/user/LoLChampSeries" target="_blank">LoL Esports - Official Youtube Account </a></li>
+                            <li><a class = "helplinks" href="https://www.twitch.tv/directory/game/League%20of%20Legends" target="_blank">Twitch - League of Legends</a></li>
+                        </ul>
+                        <p id = "rights">APDEV 2020. All rights reserved</p>
+                    </div>
+                </div>
+            </div>
+		</div>
+		
+
+       <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('#pic').attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+           
+			$('.thread').click(function(){
+				
+				
+				window.location = $(this).find("a").attr("href");
+
+				
+
+			});
+        
+        function confirm(){
+            alert("Password changed to "+ document.getElementById("newpassword").value);
+            document.getElementById("password").innerHTML = document.getElementById("newpassword").value; 
+        }
+
+        function openForm() {
+		document.getElementById("loginPopup").style.display = "block";
+		}
+
+		function closeForm() {
+        document.getElementById("loginPopup").style.display = "none";
+        $("#newpassword").val("");
+		}
+
+        
+
+        $(document).ready(function(){
+            
+            
+            $('#savebtn').click(function(){
+                
+               alert("Please refresh the page");
+
+                
+            })
+
+            
+            
+        });
+
+        $("textarea").keydown(function(event) {
+		    if(event.which===5){
+		        var cIndex=this.selectionStart;
+		        this.value=[this.value.slice(0,cIndex),//Slice at cursor index
+		            "\t",                              //Add Tab
+		            this.value.slice(cIndex)].join('');//Join with the end
+		        event.stopPropagation();
+		        event.preventDefault();                //Don't quit the area
+		        this.selectionStart=cIndex+1;
+		        this.selectionEnd=cIndex+1;            //Keep the cursor in the right index
+		    }
+		});
+
+    </script>  
+
+
+
+
+		
+
+
+			
+
+	<!-- 	Bootstrap Java Script!!
+	 -->
+	 
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>	
+	
+</body>
+</html>
