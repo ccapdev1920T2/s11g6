@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <title>Login-Register</title>
+    
+    <link rel="stylesheet" href="/css/logreg.css">
+</head>
+<body>
+    <div class = "hero">
+        <div class = "form-box">
+            <div class = "button-box">
+                <div id = "btn"></div>
+                <div class ="button-box">
+                    <button type = "button" class = "toggle-btn" onclick="login()" > Log In </button>
+                    <button type = "button" class = "toggle-btn" onclick="register()"> Register </button>
+                </div>
+
+            </div>
+
+          {{#if success}}
+
+                <div class="alert alert-success">
+                    Registration Successful!
+                </div>
+            {{/if}}
+            
+            <form id = "login" class = "input-group" action ="/login/logcheck" method="post">
+                <input type = "email" id="email_login" class =  "input-field" placeholder="Email" 
+                required="" name = "email">
+
+                <input type = "password" id="password_login"class =  "input-field" placeholder="Password" 
+                required="" name = "password">
+
+
+                <button type = "submit" id= "submit_login" class="submit-btn">Log In</button>
+            </form>
+
+
+        {{#if errors}}
+            {{#each errors}}
+                    <div class="alert alert-danger">
+                   {{ this.msg}}
+                    </div>
+
+
+            {{/each}}
+                
+        {{/if}}
+
+
+
+
+            <form id = "register" class = "input-group"  onsubmit = "return validate()" action ="/login/insert" method="post">
+
+                <input type = "text" id = "fname_register" class =  "input-field" placeholder="First Name" required="" name= "firstname">
+
+                <input type = "text" id = "lname_register" class =  "input-field" placeholder="Last Name" required="" name="lastname">
+                <p id="emailerror" style="color:red; font-size:10px"></p>
+                <input type = "email" id = "email_register" class =  "input-field" placeholder="Email" required="" name="emailadd">
+                <p id="usernameerror" style="color:red; font-size:10px"></p>
+                <input type = "text" id = "username_register" class =  "input-field" placeholder="Username" required="" name="username">
+
+                <input type = "password" id = "password_register" class =  "input-field" placeholder="Password" required="" name="pass">
+
+                <input type = "password" id = "cpassword_register" class =  "input-field" placeholder="Confirm Password" required="" name="pass2">
+
+
+                <button type = "submit" id= "submit_register" class="submit-btn">Register</button>
+            </form>
+
+
+        </div>
+        
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+    <script>
+        var x = document.getElementById("login");
+        var y = document.getElementById("register");
+        var z = document.getElementById("btn");
+
+        function   register(){
+            x.style.left = "-400px";
+            y.style.left = "50px";
+            z.style.left = "110px";
+        }
+
+        function   login(){
+            x.style.left = "50px";
+            y.style.left = "450px";
+            z.style.left = "0";
+        }
+    $(document).ready(function(){
+        $("#email_register").keyup(function(){
+            var email = $('#email_register').val();
+            $.get('/login/getCheckEmail', {email: email}, function(result){
+                if(result.email == email){
+                    $("#email_register").css("background-color", "red");
+                    $("#emailerror").text('Email is already taken');
+                    $("#submit_register").prop("disabled", true);
+                }
+                else{
+                    $("#email_register").css("background", "transparent");
+                    $("#emailerror").text('');
+                    $("#submit_register").prop("disabled", false);
+                }
+            });
+        });
+
+        $("#username_register").keyup(function(){
+            var username = $('#username_register').val();
+            $.get('/login/getCheckUsername', {username: username}, function(result){
+                if(result.username == username){
+                    $("#username_register").css("background-color", "red");
+                    $("#usernameerror").text('Username is already taken');
+                    $("submit_register").prop("disabled", true);
+                }
+                else{
+                    $("#username_register").css("background-color", "transparent");
+                    $("#usernameerror").text('');
+                    $("submit_register").prop("disabled", false);
+                }
+            });
+        });
+
+    })
+
+     
+		
+
+        $("#submit_register").click(function(){
+
+            var firstname = $("#fname_register").val();
+            var lastname = $("#lname_register").val();
+            var password = $("#password_register").val();
+            var cpassword = $("#cpassword_register").val();
+            var email = $("#email_register").val();
+         
+
+             checkpassword(firstname,lastname,password,cpassword,email);
+            
+
+
+        });
+
+
+
+        
+        function checkpassword(firstname,lastname,password,cpassword,email ){
+            if(password != cpassword){
+                alert("Password does not match");
+                $("#password_register").css("backgroundColor","red");
+                $("#cpassword_register").css("backgroundColor","red");
+                return false;
+            }
+            if(password == cpassword && firstname !="" && cpassword!="" && lastname !="" &&email != ""){
+                return true;
+            }
+        }
+
+    
+
+
+    </script>
+
+
+</body>
+</html>
+

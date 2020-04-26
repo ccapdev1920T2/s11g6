@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+	 <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+	<title>League of Forum</title>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+
+
+    <link rel="stylesheet" href="/css/threadpage.css">
+
+
+
+	<style>
+		#hot{
+			margin: 10px 0;
+			width: 55px;
+			border-radius: 10px;
+			text-align: center;
+			cursor: pointer;
+			padding:3px;
+		}
+
+		#top{
+			margin: 10px 0;
+			width: 55px;
+			padding:3px;
+			border-radius: 10px;
+			text-align: center;
+			margin-left: 25px;
+			cursor: pointer;
+		}
+
+		#new{
+			margin: 10px 0;
+			width: 55px;
+			padding:3px;
+			border-radius: 10px;
+			text-align: center;
+			margin-left: 25px;
+			cursor: pointer;
+		}
+
+
+	</style>
+</head>
+<body>
+	{{log uname}}
+
+	 <div class="container">
+        <!-- Stack the columns on mobile by making one full-width and the other half-width -->
+		{{#if isAuthenticated}}
+        <h1>Welcome {{uname}}!</h1>
+		
+		{{else}}
+		<h1>Welcome Summoners!</h1>
+		{{/if}}
+        <div class="row">
+          <div class="col-md-8">
+            <div id = "sort">
+                <a class="sortref" href="/posts">
+                    <div id = "hot">Hot</div>
+                </a>
+                    
+                <a class="sortref" href="/top">
+                    <div id = "top">Top</div>
+                </a>
+                <a class="sortref" href="/new">
+                    <div id = "new">New</div>
+                </a>
+            </div>
+			{{#if isAuthenticated}}
+			<div id = "create">
+					<button class="open-button" onclick="openForm()"><Strong> Create Post</Strong></button>
+			</div>
+			{{/if}}
+			<div id="loginPopup">
+				<div class="form-popup" id="myForm">
+						<form  id='createpost' class="form-container" action ="/createpost" method="POST">
+							<h2>Create Post</h2>
+
+							<label for="titlepost"><b>Title</b></label>
+							<input type="text" id="titlepost" placeholder="Enter Title"  name="topic">
+
+						
+							<label for="postcontent"><b>Text</b></label>
+							<textarea class="form-control" rows="8" id="postcontent" name = "description"></textarea>
+							
+							<input type="text" placeholder="Enter Domain" name="addtag" id="addtag">
+							
+
+							<div class="tooltip">Hover over me
+								<span class="tooltiptext">Tooltip text</span>
+							</div>
+							
+
+							<button type="submit" class="btn post" id = "postingbtn" >Post</button>
+							<button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+						</form>
+				</div>
+
+			</div>
+			
+				<div id = "threads">
+					<div>
+	
+					
+						<div id = "matchalert" class="alert alert-danger">
+							<center><strong>No Match!</strong></center> 
+						</div>
+					
+					</div>
+                    {{#each thread}}
+					<div class = "thread">
+						<div class = "part1">
+							{{!-- <p class = "arrowup">&#10132;</p>
+							<p class = "num">{{number_of_comments}}</p>
+							<p class = "arrowdown">&#10132;</p> --}}
+						</div>
+						<div class = "part2">
+							<div class = "author">
+								Posted by {{author}} {{formatdate date_created}}
+							</div>	
+							<div class = "posttitle">
+								{{topic}}
+							</div>
+							<div id = "tags">
+								<div class = "tagsprite">
+									<img src="/img/tag.png" style= "height: 15px; width: 15px; margin-right: 5px;">
+								</div>
+								<div class = "tag">{{domain}}</div>
+									
+									<p style = " margin-right:5px; ">{{number_of_comments}} comment/s</p>
+									<a href="/specposts/{{_id}}">View Post</a>
+									
+							</div>
+						</div>
+					</div>		
+                    {{/each}}
+					<div id="pages">
+						<a href="http://localhost:3000/posts?page=1">1</a>
+						<a href="http://localhost:3000/posts?page=2">2</a>
+						<a href="http://localhost:3000/posts?page=3">3</a>
+						<a href="http://localhost:3000/posts?page=4">4</a>
+					</div>
+			</div>
+
+          </div>
+          <div class="col-6 col-md-4">
+
+            <div id = "community">
+                <div id = "commcont">
+                    <div id = "comm">
+                        About Community
+                    </div>
+                </div>
+                <div id="shortdesc">
+                    A League of Legends Forum created by League of Legends enthusiasts exclusively for Philippine Server Players
+                </div>
+                <div id="creation">
+                    <img src="img/balloon.png" style= "height: 20px; width: 20px;">
+                        Created February 25, 2020
+                </div>
+                    
+                    
+            </div>
+            
+				<div id="others">
+
+					<ul id = "help">
+						<li><a class = "helplinks" href="https://lol.gamepedia.com/League_of_Legends_Esports_Wiki" target="_blank">League Wiki</a></li>
+						<li><a class = "helplinks" href="https://watch.lolesports.com/standings" target="_blank">League Team Standings</a></li>
+						<li><a class = "helplinks" href="https://leagueoflegends.fandom.com/wiki/Item" target="_blank">League Item Wiki</a></li>
+						<li><a class = "helplinks" href="https://champion.gg/" target="_blank">League Champion Statistics & Guide</a></li>
+						<li><a class = "helplinks" href="https://lol.garena.ph" target="_blank">Garena Official Website</a></li>
+						<li><a class = "helplinks" href="https://www.youtube.com/user/LoLChampSeries" target="_blank">LoL Esports - Official Youtube Account </a></li>
+						<li><a class = "helplinks" href="https://www.twitch.tv/directory/game/League%20of%20Legends" target="_blank">Twitch - League of Legends</a></li>
+					</ul>
+					
+					
+					<p id = "rights">APDEV 2020. All rights reserved</p>
+				</div>
+        	</div>
+  	  </div>
+	</div>
+
+
+
+	
+	<script>
+		var tagArr = [];
+		var pathname = window.location.pathname; // Returns path only (/path/example.html)
+		var url      = window.location.href;     // Returns full URL (https://example.com/path/example.html)
+		var origin   = window.location.origin;
+		
+
+		$(document).ready(function(){
+			$('#matchalert').hide();
+			{{#if noMatch}}
+				$('#matchalert').show();
+			{{/if}}
+				
+			$('.thread').click(function(){
+				
+				
+				window.location = $(this).find("a").attr("href");
+
+				
+
+			});
+			
+			$('#top').click(function(){
+				$(this).css("background-color", "gray");
+				$(this).css("color", "red");
+			});
+
+			$('#hot').click(function(){
+				$(this).css("background-color", "gray");
+				$(this).css("color", "red");
+			});
+
+			$('#new').click(function(){
+				$(this).css("background-color", "gray");
+				$(this).css("color", "red");
+			});
+			
+		});
+
+		function openForm() {
+			document.getElementById("loginPopup").style.display = "block";
+		}
+
+		function closeForm() {
+			document.getElementById("loginPopup").style.display = "none";
+		}
+
+		
+
+		$("#addtagbtn").click(function() {
+		$("#addedtag").append("<button id = 'addedtagb'> " + $("#addtag").val() + " </button>");
+		var x = $("#addtag").val();
+		tagArr.push(x);
+			document.getElementById('addtag').value = "";
+		});
+
+		$('#addedtag').on('click', 'button', function() {
+			
+			$(this).remove();
+		});
+
+		
+
+
+	</script>
+	<!-- 	Bootstrap Java Script!!
+	 -->
+	 
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>	
+	
+</body>
+</html>

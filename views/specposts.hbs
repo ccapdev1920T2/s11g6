@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+<head>
+	 <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+	<title>League of Forum</title>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+
+  
+
+    <link rel="stylesheet" href="/css/specificpost.css">
+
+
+</head>
+<body>
+
+	<div id = "buffer"></div>
+	<div id = "intro"></div>
+	<div id = "buffer"></div>
+	<div id = "container">
+		<div id = "container2">
+			<div id = "content">
+				<div class = "threads">
+					{{#each thread}}
+					<div class = "thread">
+						<div class = "part1">
+						
+						</div>
+						<div class = "part2">
+							<div class = "author">
+								Posted by  <span class = "userlink"> <a href="/profile/status/{{author}}">{{author}} </a></span> {{formatdate date_created}}
+							</div>	
+							<div class = "posttitle">
+								{{topic}}
+							</div>
+							
+							<div id="paragraph">
+								{{description}}
+							</div>
+
+							 {{/each}}
+							<div id = "tags">
+								<div class = "commentsprite" onclick="openCommentForm()">
+									<img src="/img/comment.png" style= "height: 15px; width: 15px; margin-right: 5px;">
+									<p class="tag">Comment</p>
+								</div>
+								{{#if compUsers}}
+								
+									<div class = "editsprite">									
+											<img src="/img/edit.png" style= "height: 15px; width: 15px; margin-right: 5px;">										
+											<p class="tag">Edit</p>									
+									</div>
+                                {{/if}}
+									
+                                {{#each thread}}
+									 <div id="editPopup">
+										<div class="form-popup" id="myForm">
+											<form class="form-container" action ="/updatePost/{{_id}}" method="POST">  
+													<h2>Edit Post</h2>
+                              
+													<textarea class="form-control" id = "edit_postID"  rows="9" name = "edit_post">{{description}}</textarea>  
+										
+													<div id = "extraspace"></div>
+													
+													
+													<button type="submit" class="btn save" id = "savebtn" onclick="closeForm()" >Save</button>
+
+													<button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+					
+												</form>
+										</div>
+					
+									</div>
+                                {{/each}}
+                            	<div class = "hidessprite">
+									<img src="/img/hide.png" style= "height: 15px; width: 15px; margin-right: 5px;">
+									<p class="tag">hide</p>
+								</div>
+
+								{{#if compUsers}}
+								{{#each thread}}
+								<div class = "reportsprite" onclick="window.location.href = '/delete/{{_id}}';">
+									<img src="/img/delete.png" style= "height: 20px; width: 20px; margin-right: 5px;">
+									<p class="tag">Delete</p>
+								</div>
+								{{/each }}
+								{{/if}}
+
+
+								
+
+			
+							</div>
+						</div>
+						
+					</div>
+				{{#each thread}}
+				<div id = "commentdiv" class="posts">
+					<form  id='commentform' class="form-container"  action ="/createComment/{{_id}}/{{../postID}}" method="POST">                              
+     
+						<textarea class="comment" id = "comment_postID" name = "comment_post" placeholder="What are your thoughts?"></textarea>  
+						<button type = "submit" id="commentpost" class="btn commentpost" onclick="closeCommentForm()">Comment</button> 
+						<button type = "button" id="cancelcomment" class="btn cancelcomment" onclick="cancelCommentForm()">Cancel</button>
+					</form>
+				</div>
+				{{/each }}
+
+			
+				
+
+				</div>
+				{{#each comment}}
+				<div class="commentlist">
+					
+					<div class='specificcomm'>
+						
+						<div class = "author">
+								Commented by <a href="/profile/status/{{author}}">{{author}} </a>{{formatdate date_created}}
+						</div>	
+					 	<p  id="tacomment" readonly name = "comment_text">
+							{{ description}}
+						</p>
+
+						 {{#when ../currentUser 'eq' author}}
+
+						 	<div id='tags'>
+
+									 <div class = 'editspeccom' onclick="openCommentEditForm()">
+						 				<img src='/img/edit.png'style= 'height: 15px; width: 15px; margin-right: 5px;'>
+						 				<p class='tag'>Edit</p>
+						 			</div>
+
+
+						 			<div class = 'deletesprite' onclick="window.location.href = '/comment/delete/{{_id}}/{{author}}/{{postID}}';"> <img src='/img/delete.png' style= 'height: 15px; width: 15px; margin-right: 5px;'>
+						 				<p class='tag'>Delete</p>
+						 			</div>	
+									
+						 	</div>
+							 <div class="formeditcomment" id="myForm">
+									<form id="editform" class="form-container" action ="/comment/edit/{{_id}}/{{../postID}}" method="POST">
+		
+										<textarea class="form-control" id = "edit_commentID"  rows="3" name = "edit_comment">{{description}}</textarea>  
+										<div id = "extraspace"></div>
+										<button type="submit" class="btn save" id = "savebtn" onclick="closeCommentEditForm()">Save</button>
+										<button type = "button" id="canceledit" class="btn cancel" onclick="closeCommentEditForm()">Cancel</button>
+									</form>
+							</div>
+
+							{{/when}} 
+					 </div>				 
+
+				</div>
+				{{/each}}
+					
+
+				 
+			</div>
+			
+			<div id = "buffer2"></div>
+			<div id = "about">
+				<div id = "community">
+					<div id = "commcont">
+						<div id = "comm">
+							About Community
+						</div>
+					</div>
+					<div id="shortdesc">
+						A League of Legends Forum created by League of Legends enthusiasts exclusively for Philippine Server Players
+					</div>
+					<div id="creation">
+						<img src="/img/balloon.png" style= "height: 20px; width: 20px;">
+							Created February 25, 2020
+					</div>
+						
+						
+				</div>
+				<div id="others">
+
+					<ul id = "help">
+						<li><a class = "helplinks" href="https://lol.gamepedia.com/League_of_Legends_Esports_Wiki" target="_blank">League Wiki</a></li>
+						<li><a class = "helplinks" href="https://watch.lolesports.com/standings" target="_blank">League Team Standings</a></li>
+						<li><a class = "helplinks" href="https://leagueoflegends.fandom.com/wiki/Item" target="_blank">League Item Wiki</a></li>
+						<li><a class = "helplinks" href="https://champion.gg/" target="_blank">League Champion Statistics & Guide</a></li>
+						<li><a class = "helplinks" href="https://lol.garena.ph" target="_blank">Garena Official Website</a></li>
+						<li><a class = "helplinks" href="https://www.youtube.com/user/LoLChampSeries" target="_blank">LoL Esports - Official Youtube Account </a></li>
+						<li><a class = "helplinks" href="https://www.twitch.tv/directory/game/League%20of%20Legends" target="_blank">Twitch - League of Legends</a></li>
+					</ul>
+					
+					
+					<p id = "rights">APDEV 2020. All rights reserved</p>
+				</div>
+
+			</div>
+		</div>
+        
+    </div>
+	
+	<script>
+
+		function openForm() {
+		document.getElementById("editPopup").style.display = "block";
+		}
+
+		function closeForm() {
+        document.getElementById("editPopup").style.display = "none";
+		}
+
+		function openCommentForm() {
+        document.getElementById("commentform").style.display = "block";
+		$(".posts").show();
+		}
+
+		function closeCommentForm() {
+	
+
+        document.getElementById("commentform").style.display = "none";
+		}
+
+		function cancelCommentForm() {
+		$('#comment_postID').val('');
+
+        document.getElementById("commentform").style.display = "none";
+		}
+
+		function openCommentEditForm(){
+			//specific form will show
+	
+			$(".formeditcomment").show(); //show form
+			/*
+			$(".commentlist").hide();
+			$(this).parent().parent().show();
+			*/ //thought this would work
+			//document.getElementByClass("formeditcomment").style.display = "block";
+		}
+
+		function closeCommentEditForm(){
+			$(".formeditcomment").hide();
+			document.getElementById("formeditcomment").style.display = "none";
+			
+		}
+
+		$(document).ready(function(){
+
+
+			$(".formeditcomment").hide();
+			$(".savesprite").hide();
+			$(".posts").hide();
+			$(".comments").hide();
+			//$(".countedit").hide();
+			
+			$("#commentpost").click(function(){ // adding a comment
+				
+				//$(".specificcomm").show();
+				//$("#comment_postID").val("");
+				closeCommentForm();
+			})
+
+			$(".commentsprite").click(function(){ // clicking comment button post
+				
+				/*
+				if($(".posts").show() == true){
+					$(".posts").hide();
+				}
+				else{
+					$(".posts").show();
+					$("#btnpost").show();
+					$("#editpost").hide();
+				}
+				*/
+				openCommentForm();
+			})
+
+			$(".hidessprite").click(function(){//clicking hide button post
+				
+				$(".threads").hide();
+				$(".commentlist").hide();
+				$(".comm").hide();
+			})
+
+
+
+
+			$(".editsprite").click(function(){ // clicking edit button post
+				/*
+				if($(".posts").show() == true){
+					$(".posts").hide();
+				}
+				else{
+					$(".posts").show();
+					$("#btnpost").hide();
+					$("#editpost").show();
+					
+				}
+				*/
+				openForm();
+				 
+					
+
+			})
+
+			
+				$('#savebtn').click(function(){
+						//change context
+				 })
+
+			$(".editspeccom").click(function(){ // clicking edit button comment
+				/*
+				if($(".comments").show() == true){
+					$(".comments").hide();
+				}
+				else{
+					$(".comments").show();
+					$("#btndelete").hide();
+					$("#editcomment").show();
+				}
+*/
+				openCommentEditForm();
+				// $("#tacomment").val($(".comment").val());
+			})
+			/*
+			$("#editcomment").click(function(){ // editing comment
+			    $("#tacomment").text($(".editcom").val());
+				$(".editcom").val("");
+				$(".comments").hide();
+			})
+			*/
+			$(".deletesprite").click(function(){ // deleting comment
+				$(this).parent().parent().remove();
+			})
+
+
+		});
+
+
+	</script>
+
+	
+
+	<!-- 	Bootstrap Java Script!!
+	 -->
+	 
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>	
+	
+</body>
+</html>
