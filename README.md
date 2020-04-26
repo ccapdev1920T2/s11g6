@@ -66,6 +66,7 @@ Once the user has logged in using the credentials of some of the premade account
 ### Built With
 - [VSCODE](https://code.visualstudio.com/) - used for coding
 - [Google Chrome](https://www.google.com/chrome/?brand=CHBD&gclid=EAIaIQobChMI45uWqp7d6AIVCgRgCh0yDQVFEAAYASAAEgLDCPD_BwE&gclsrc=aw.ds) - used for accessing the website
+- Heroku Used for Phase 3 of the project in accessing the application online
 ### Contributing
 
 ### Versioning
@@ -78,4 +79,7 @@ We use Google drive for versioning. For the versions available, see the [link](h
 
 ### Acknowledgments
 - Hat tip to anyone whose code was used
+
+### Heroku Link
+- https://boiling-temple-34155.herokuapp.com/
 
