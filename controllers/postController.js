@@ -50,8 +50,6 @@ const postController = {
         var passedVariable = req.session.valid;
     req.session.valid = null;
     var username = "summoners";
-    const limit = req.query.limit ? parseInt(req.query.limit): 10;
-    const page = req.query.page ? parseInt(req.query.page): 1;
 
     if(req.isAuthenticated()){
         username = req.user.username
@@ -77,8 +75,6 @@ const postController = {
                     {domain: regex}
                 ]
             })
-                .skip((page - 1) * limit)
-                .limit(limit);
             cursor.forEach(function(doc, err){
                 assert.equal(null, err);
                 resultArray.push(doc);
@@ -96,7 +92,7 @@ const postController = {
                 }
             });
         } else{
-            var cursor = db.collection('posts').find().skip((page - 1) * limit).limit(limit);
+            var cursor = db.collection('posts').find();
             cursor.forEach(function(doc, err){
                 assert.equal(null, err);
                 resultArray.push(doc);
@@ -112,8 +108,6 @@ const postController = {
         var passedVariable = req.session.valid;
         req.session.valid = null;
         var username = "summoners";
-        const limit = req.query.limit ? parseInt(req.query.limit): 10;
-        const page = req.query.page ? parseInt(req.query.page): 1;
     
         if(req.isAuthenticated()){
             username = req.user.username
@@ -139,8 +133,6 @@ const postController = {
                         {domain: regex}
                     ]
                 })
-                    .skip((page - 1) * limit)
-                    .limit(limit);
                 cursor.forEach(function(doc, err){
                     assert.equal(null, err);
                     resultArray.push(doc);
@@ -158,7 +150,7 @@ const postController = {
                     }
                 });
             } else{
-                var cursor = db.collection('posts').find().skip((page - 1) * limit).limit(limit);
+                var cursor = db.collection('posts').find();
                 cursor.forEach(function(doc, err){
                     assert.equal(null, err);
                     resultArray.push(doc);
@@ -233,8 +225,6 @@ const postController = {
     getTop:async function (req, res) {
         var resultArray = [];
         var username = "summoners";
-        const limit = req.query.limit ? parseInt(req.query.limit): 10;
-        const page = req.query.page ? parseInt(req.query.page): 1;
     
         if(req.isAuthenticated()){
             username = req.user.username
@@ -246,7 +236,7 @@ const postController = {
             },async function(err,db){
             var sort = { number_of_comments: -1 };  
             assert.equal(null, err);
-            var cursor = await db.collection('posts').find().sort(sort).skip((page - 1) * limit).limit(limit);
+            var cursor = await db.collection('posts').find();
             cursor.forEach(function(doc, err){
                 assert.equal(null, err);
                 resultArray.push(doc);
@@ -258,8 +248,6 @@ const postController = {
     getNew: async function (req, res) {
         var resultArray = [];
         var username = "summoners";
-        const limit = req.query.limit ? parseInt(req.query.limit): 10;
-        const page = req.query.page ? parseInt(req.query.page): 1;
 
         if(req.isAuthenticated()){
             username = req.user.username
@@ -271,7 +259,7 @@ const postController = {
             },async function(err,db){
             var sort = { date_created: -1 };
             assert.equal(null, err);
-            var cursor = await db.collection('posts').find().sort(sort).skip((page - 1) * limit).limit(limit);
+            var cursor = await db.collection('posts').find().sort(sort);
             cursor.forEach(function(doc, err){
                 assert.equal(null, err);
                 resultArray.push(doc);
