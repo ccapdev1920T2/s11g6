@@ -2,11 +2,10 @@
 For this project, the members of the group are tasked to create an Online Forum Web Application exclusively dedicated for League of Legends players in the Philippine server to post questions, opinions, or simply anything related to the game. This entails that the web application maintains all past and future threads posted by the user of the application. Various key features present in other online forums must also be present in this application. Below are the features expected to be present.
 
 ## Getting Started
-Download the file in the [GitHub Repository](https://github.com/ccapdev1920T2/s11g6.git) then extract. 
+Access the web application using this link https://boiling-temple-34155.herokuapp.com/
 ### Prerequisites
 There should be a web browser install in the console. We could recommend using [Google Chrome](https://www.google.com/chrome/?brand=CHBD&gclid=EAIaIQobChMI45uWqp7d6AIVCgRgCh0yDQVFEAAYASAAEgLDCPD_BwE&gclsrc=aw.ds).
-### Installing
-Go to a terminal or Command Prompt then navigate to the folder where you extracted the zip file. Then enter npm install, this will allow the file to download neccessary library/modules for the website to operate. After installation enter npm start to run the server. Then open a web browser then go to (http://localhost:3000/posts) This is the home page where you could access all the features of the application.
+
 ## Running the tests
 In order for you to fully utilize the application, you must first login using the following pre made accounts 
 Registered Users
